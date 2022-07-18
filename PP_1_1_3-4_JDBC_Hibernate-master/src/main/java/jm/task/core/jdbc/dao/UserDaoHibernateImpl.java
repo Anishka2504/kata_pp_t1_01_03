@@ -14,8 +14,8 @@ public class UserDaoHibernateImpl implements UserDao {
 
     private final Util util;
 
-    public UserDaoHibernateImpl() {
-        util = new Util();
+    public UserDaoHibernateImpl(Util util) {
+        this.util = new Util();
     }
 
 
@@ -83,7 +83,8 @@ public class UserDaoHibernateImpl implements UserDao {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
             String query = "DELETE FROM user WHERE id = ?";
-            NativeQuery<Integer> nativeQuery = session.createNativeQuery(query, Integer.class);
+            NativeQuery<User> nativeQuery = session.createNativeQuery(query, User.class);
+            nativeQuery.setParameter(1, id);
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException ex) {
@@ -115,7 +116,7 @@ public class UserDaoHibernateImpl implements UserDao {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
             String query = "DELETE FROM user";
-            session.createSQLQuery(query);
+            session.createNativeQuery(query);
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException ex) {
