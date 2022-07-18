@@ -14,7 +14,7 @@ public class UserDaoJDBCImpl implements UserDao {
     private final Util util;
 
     public UserDaoJDBCImpl(Util util) {
-        this.util = util;
+        this.util = new Util();
     }
 
     public void createUsersTable() {
@@ -22,9 +22,9 @@ public class UserDaoJDBCImpl implements UserDao {
         if (connection.isPresent()) {
             String query = "CREATE TABLE IF NOT EXISTS `user` (\n" +
                     "  `id` bigint(20) NOT NULL AUTO_INCREMENT,\n" +
-                    "  `name` varchar(100) NOT NULL,\n" +
-                    "  `lastName` varchar(100) NOT NULL,\n" +
-                    "  `age` smallint(6) NOT NULL,\n" +
+                    "  `name` varchar(255) NOT NULL,\n" +
+                    "  `last_name` varchar(255) NOT NULL,\n" +
+                    "  `age` tinyint(6) NOT NULL,\n" +
                     "  PRIMARY KEY (`id`)\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8;";
             try (Statement statement = connection.get().createStatement();) {
@@ -50,7 +50,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         Optional<Connection> connection = util.createConnection();
         if (connection.isPresent()) {
-            String query = "INSERT INTO `user` (`name`, `lastName`, `age`) VALUES (?, ?, ?)";
+            String query = "INSERT INTO user (name, last_name, age) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.get().prepareStatement(query)) {
                 preparedStatement.setString(1, name);
                 preparedStatement.setString(2, lastName);
