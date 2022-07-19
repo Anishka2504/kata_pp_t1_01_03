@@ -47,7 +47,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             if (preparedStatement.executeUpdate() > 0) {
-                System.out.println("User is added");
+                System.out.println("User with name " + name + " is added");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -78,6 +78,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setLastName(resultSet.getString("last_name"));
                 user.setAge(resultSet.getByte("age"));
                 result.add(user);
+                System.out.println(user);
             }
             return result;
         } catch (SQLException ex) {
