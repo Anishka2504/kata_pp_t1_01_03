@@ -16,6 +16,10 @@ public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
     public void createUsersTable() {
         String query = "CREATE TABLE IF NOT EXISTS `user` (\n" +
                 "  `id` bigint(20) NOT NULL AUTO_INCREMENT,\n" +
