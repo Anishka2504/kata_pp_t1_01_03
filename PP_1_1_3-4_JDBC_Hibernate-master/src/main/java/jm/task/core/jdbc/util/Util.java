@@ -15,20 +15,18 @@ import java.util.Optional;
 
 public class Util {
 
-    public Optional<Connection> createConnection() {
+    public static Connection createConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            return Optional.of(
-                    DriverManager.getConnection(
+            return DriverManager.getConnection(
                             "jdbc:mysql://localhost:3306/user",
                             "root",
                             "root"
-                    )
             );
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        return Optional.empty();
+        return null;
     }
 
     public SessionFactory getSessionFactory(){
